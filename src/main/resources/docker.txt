@@ -1,0 +1,30 @@
+docker pull mysql:8.0.17
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password --name yh_mysql mysql:8.0.17 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+docker exec -it yh_mysql bash
+
+mysql -u root -p
+
+show databases;
+create database woo;
+
+CREATE USER 'yh'@'%' IDENTIFIED BY '1234';
+SHOW GRANTS FOR yh;
+
+GRANT ALL PRIVILEGES ON *.* TO 'yh'@'%';
+
+FLUSH PRIVILEGES;
+
+exit
+
+mysql -u yh -p
+
+show databases;
+use woo;
+show tables;
+--Account.sql
+desc account;
+
+select * from account;
+
+INSERT INTO woo.account (id, password, nickname, email)
+VALUES ('woo', '1234', 'woop', 'woo');
