@@ -38,4 +38,12 @@ class AccountRepositoryTest {
         accountRepository.findAccount("yoo", "wer");
     }
 
+    @Test
+    void findByEmail() {
+        Optional<Account> account = accountRepository.findByEmail("wise");
+
+        assertTrue(account.isPresent());
+        System.out.println(account.get());
+    }
+
 }

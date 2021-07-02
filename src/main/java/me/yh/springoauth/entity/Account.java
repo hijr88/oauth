@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
@@ -62,6 +63,15 @@ public class Account extends Address implements Persistable<String > {
         this.email = email;
     }
 
+    public Account(String nickname, String email, String profileImage) {
+        this.nickname = nickname;
+        this.email = email;
+        this.profileImage = profileImage;
+
+        this.id = UUID.randomUUID().toString();
+        this.password = UUID.randomUUID().toString();
+    }
+
     public static Account testUser(String id) {
         Account Account = new Account();
         Account.id = id;
@@ -91,9 +101,10 @@ public class Account extends Address implements Persistable<String > {
         this.password = passwordEncoder.encode(this.password);
     }*/
 
-    public void changeProfile(String nickname, String profileImage) {
+    public Account changeProfile(String nickname, String profileImage) {
         this.nickname = nickname;
         this.profileImage = profileImage;
+        return this;
     }
 
     public void changePassword(String password) {
