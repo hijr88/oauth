@@ -2,12 +2,12 @@ package me.yh.springoauth.account.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import me.yh.springoauth.entity.Account;
+import me.yh.springoauth.account.Account;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
-import static me.yh.springoauth.entity.QAccount.account;
+import static me.yh.springoauth.account.QAccount.account;
 
 public class AccountRepositoryImpl implements AccountRepositoryCustom{
 
@@ -27,6 +27,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom{
 
         return Optional.ofNullable(a);
     }
+
 
     private BooleanExpression idEq(String id) {
         if (id == null) return null;

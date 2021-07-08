@@ -1,13 +1,14 @@
-package me.yh.springoauth.entity;
+package me.yh.springoauth.account;
 
 import lombok.*;
+import me.yh.springoauth.abstractentity.Address;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,12 +21,17 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 @DynamicInsert                      //null 값은 insert 할 때 제외
 @DynamicUpdate
+@IdClass(AccountId.class)
 @Entity
 public class Account extends Address implements Persistable<String > {
 
     @Id
-    @Column(length = 50, updatable = false)
+    @Column(length = 100, updatable = false)
     private String id;
+
+    @Id
+    @Column(length = 30, updatable = false)
+    private String platformType;
 
     @Column(length = 100, nullable = false)
     private String password;
@@ -33,7 +39,7 @@ public class Account extends Address implements Persistable<String > {
     @Column(length = 50, nullable = false)
     private String nickname;
 
-    @Column(length = 300, nullable = false, unique = true, updatable = false)
+    @Column(length = 300, unique = true)
     private String email;
 
     @CreatedDate
@@ -48,41 +54,35 @@ public class Account extends Address implements Persistable<String > {
     @ColumnDefault("1")
     private Boolean enable = true;
 
-    @ColumnDefault("'ROLE_USER'")
-    private String role = "ROLE_USER";
+    @Convert(converter = RoleConverter.class)
+    private Role role = Role.USER;
 
     @Override
     public boolean isNew() {
         return createDate == null;
     }
 
-    public Account(String id, String password, String nickname, String email) {
+    public Account(String id, String password, String nickname, String email, String profileImage, String platformType) {
         this.id = id;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
-    }
-
-    public Account(String nickname, String email, String profileImage) {
-        this.nickname = nickname;
-        this.email = email;
         this.profileImage = profileImage;
-
-        this.id = UUID.randomUUID().toString();
-        this.password = UUID.randomUUID().toString();
+        this.platformType = platformType;
     }
 
     public static Account testUser(String id) {
-        Account Account = new Account();
-        Account.id = id;
-        Account.password = "pass";
-        Account.nickname = "테스트";
-        Account.email = "test@gmail";
-        Account.profileImage = "none";
-        return Account;
+        Account a = new Account();
+        a.id = id;
+        a.password = "pass";
+        a.nickname = "테스트";
+        a.email = "test@gmail";
+        a.profileImage = "none";
+        a.platformType = "this";
+        return a;
     }
 
-    public static Account testUser(String id, String role) {
+    public static Account testUser(String id, Role role) {
         Account Account = new Account();
         Account.id = id;
         Account.password = "pass";
@@ -97,9 +97,9 @@ public class Account extends Address implements Persistable<String > {
         this.email = email;
     }
 
-    /*public void encodePassword(PasswordEncoder passwordEncoder) {
+    public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
-    }*/
+    }
 
     public Account changeProfile(String nickname, String profileImage) {
         this.nickname = nickname;
@@ -113,6 +113,14 @@ public class Account extends Address implements Persistable<String > {
 
     public void disable() {
         this.enable = false;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
+
+    public void updateRole(Role role) {
+        this.role = role;
     }
 }
 

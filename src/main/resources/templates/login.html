@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .btn-google {
+            background-image: url("/images/google/btn_google_signin_dark_normal_web.png");
+            width: 191px;
+            height: 46px;
+            display: inline-block;
+        }
+        .btn-google:hover {
+            background-image: url("/images/google/btn_google_signin_dark_focus_web.png");
+        }
+        .btn-naver {
+            background-image: url("/images/naver/btnG_완성형.png");
+            width: 191px;
+            height: 46px;
+            display: inline-block;
+        }
+        .btn-kakao {
+            background-image: url("/images/kko/kakao_login_large_narrow.png");
+            width: 191px;
+            height: 46px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<h1>하염</h1>
+<!-- OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI + "/{registrationId}" -->
+<a href="/login/oauth/google" class="btn-google" role="button"></a>
+<a href="/login/oauth/github" class="btn-github" role="button">깃허브</a>
+<a href="/login/oauth/naver" class="btn-naver" role="button"></a>
+<a href="/login/oauth/kakao" class="btn-kakao" role="button"></a>
+
+</body>
+</html>

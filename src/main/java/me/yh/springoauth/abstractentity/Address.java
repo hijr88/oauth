@@ -1,4 +1,4 @@
-package me.yh.springoauth.entity;
+package me.yh.springoauth.abstractentity;
 
 import lombok.*;
 

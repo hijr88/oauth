@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>첫 화면</title>
+</head>
+<body>
+    <div th:if="${user}">
+        <p th:text="|닉네임: ${user.nickname}|"></p>
+        <p th:text="|이메일: ${user.email}|"></p>
+        <p th:text="|권한  : ${user.role}|"></p>
+        <p th:text="|가입경로: ${user.platformType}|"></p>
+    </div>
+    <div th:if="${user == null}">
+        로그인을 해주세요. <a th:href="@{/login}" th:text="|로그인 하기|"></a>
+    </div>
+
+</body>
+</html>

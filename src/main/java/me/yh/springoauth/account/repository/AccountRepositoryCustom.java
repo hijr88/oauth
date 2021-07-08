@@ -1,6 +1,6 @@
 package me.yh.springoauth.account.repository;
 
-import me.yh.springoauth.entity.Account;
+import me.yh.springoauth.account.Account;
 
 import java.util.Optional;
 

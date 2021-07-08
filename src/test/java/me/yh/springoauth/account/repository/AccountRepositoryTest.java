@@ -1,6 +1,6 @@
 package me.yh.springoauth.account.repository;
 
-import me.yh.springoauth.entity.Account;
+import me.yh.springoauth.account.Account;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,10 +40,9 @@ class AccountRepositoryTest {
 
     @Test
     void findByEmail() {
-        Optional<Account> account = accountRepository.findByEmail("wise");
+        Optional<Account> account = accountRepository.findById("wise");
 
         assertTrue(account.isPresent());
         System.out.println(account.get());
     }
-
 }

@@ -1,7 +1,7 @@
 package me.yh.springoauth.config;
 
 import lombok.RequiredArgsConstructor;
-import me.yh.springoauth.auth.CustomOAuth2UserService;
+import me.yh.springoauth.oauth.CustomOAuth2UserService;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,17 +17,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .headers().frameOptions().disable()
-                .and()
+            .and()
                 .authorizeRequests()
-                .antMatchers("/", "/css/**", "/images/**",
-                        "/js/**", "/h2-console/**").permitAll()
+                .antMatchers("/", "/static/**" ,"/css/**", "/images/**", "/js/**", "/h2-console/**", "/login").permitAll()
                 .antMatchers("/api/v1/**").hasRole("USER")
                 .anyRequest().authenticated()
-                .and()
+            .and()
                 .logout()
-                .logoutSuccessUrl("/")
-                .and()
+            .and()
                 .oauth2Login()
+                .loginPage("/login")
+                .authorizationEndpoint(a -> a.baseUri("/login/oauth"))
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
     }
